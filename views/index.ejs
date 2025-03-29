@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Champeta </title>
+</head>
+<body>
+    <header>
+        <p class="headerP n1">Champeta</p><p class="headerP n2" >11</p>
+    </header>
+    <div class="preguntasContainer">
+        <div class="pregunta">
+            <div class="preguntaHeader">
+                <p class="preguntaP">Tipo de pregunta</p>
+                <figure>
+                    <% if(preguntas[nPregunta].img){ %>
+                    <img src="<%= preguntas[nPregunta].img %>" alt="">
+                    <% } %>
+                </figure>
+                <h1 class="preguntaTitle">
+                    <%= preguntas[nPregunta].pregunta %>
+                </h1>
+            </div>
+            <div class="opciones"><button class="btn1"><%= desordPreguntas[0] %></button></div>
+            <div class="opciones"><button class="btn2"><%= desordPreguntas[1] %></button></div>
+            <div class="opciones"><button class="btn3"><%= desordPreguntas[2] %></button></div>
+            <div class="opciones"><button class="btn4"><%= desordPreguntas[3] %></button></div>
+            <button style="display: none;" class="btn5"><%= preguntas[nPregunta].opcionc  %></button>
+        </div>
+    </div>
+    </body>
+    <script>
+        function oprimirBtn(){
+            
+            const respuesta=this.innerText
+            const btn=this
+            let respuestaCorrectaError= null
+            for (let i=0;i<preguntas.length;i++){
+                if(respuestac==preguntas[i].innerText){
+                    respuestaCorrectaError = preguntas[i]
+                    break
+                }
+            }
+            console.log(respuestaCorrectaError);
+            
+            
+            if(respuestac===respuesta){
+                btn.style.background = "green"
+                setTimeout(() => {
+                    location.reload()
+                }, 2000);
+                
+
+            } else {
+                respuestaCorrectaError.style.background="green"
+                btn.style.background = "red"
+                setTimeout(() => {
+                    location.reload()
+                }, 2000);
+                
+
+                
+            }
+        }
+        document.querySelector(".btn1").addEventListener("click", oprimirBtn);
+        document.querySelector(".btn2").addEventListener("click", oprimirBtn);
+        document.querySelector(".btn3").addEventListener("click", oprimirBtn);
+        document.querySelector(".btn4").addEventListener("click", oprimirBtn);
+        const btn1=document.querySelector(".btn1")
+        const btn2=document.querySelector(".btn2")
+        const btn3=document.querySelector(".btn3")
+        const btn4=document.querySelector(".btn4")
+        const preguntas=[btn1,btn2,btn3,btn4]
+        const respuestac= document.querySelector(".btn5").innerText
+        const respuestacBtn=document.querySelector(".btn5")
+    </script>
+    </html>
