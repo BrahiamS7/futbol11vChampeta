@@ -19,7 +19,7 @@ db.connect();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
-app.get("/",async(req,res)=>{
+app.get("/Juego",async(req,res)=>{
     const result= await db.query("SELECT * FROM preguntas")
     const preguntas=result.rows
     const nPregunta=Math.floor(Math.random()*preguntas.length)
@@ -39,8 +39,8 @@ app.get("/",async(req,res)=>{
         oprimirBtn:oprimirBtn.toString()
     })
 })
-app.get("/hola",async(req,res)=>{
-    res.render("index.ejs")
+app.get("/",async(req,res)=>{
+    res.render("juego.ejs")
 })
 
 

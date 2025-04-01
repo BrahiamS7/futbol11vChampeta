@@ -13,7 +13,10 @@
     <div class="preguntasContainer">
         <div class="pregunta">
             <div class="preguntaHeader">
-                <p class="preguntaP">Tipo de pregunta</p>
+                <div class="pContainer">
+                    <p class="preguntaP">Tipo de pregunta</p>
+                    <p id="contador">0</p>
+                </div>
                 <figure>
                     <% if(preguntas[nPregunta].img){ %>
                     <img src="<%= preguntas[nPregunta].img %>" alt="">
@@ -23,19 +26,24 @@
                     <%= preguntas[nPregunta].pregunta %>
                 </h1>
             </div>
-            <div class="opciones"><button class="btn1"><%= desordPreguntas[0] %></button></div>
-            <div class="opciones"><button class="btn2"><%= desordPreguntas[1] %></button></div>
-            <div class="opciones"><button class="btn3"><%= desordPreguntas[2] %></button></div>
-            <div class="opciones"><button class="btn4"><%= desordPreguntas[3] %></button></div>
-            <button style="display: none;" class="btn5"><%= preguntas[nPregunta].opcionc  %></button>
+            <div class="opciones"><button class="btn1 btn"><%= desordPreguntas[0] %></button></div>
+            <div class="opciones"><button class="btn2 btn"><%= desordPreguntas[1] %></button></div>
+            <div class="opciones"><button class="btn3 btn"><%= desordPreguntas[2] %></button></div>
+            <div class="opciones"><button class="btn4 btn"><%= desordPreguntas[3] %></button></div>
+            <button style="display: none;" class="btn5 btn"><%= preguntas[nPregunta].opcionc  %></button>
+            
         </div>
     </div>
     </body>
     <script>
-        function oprimirBtn(){
-            
-            const respuesta=this.innerText
-            const btn=this
+        let contador = sessionStorage.getItem("contador") ? parseInt(sessionStorage.getItem("contador")) : 0;
+        document.getElementById("contador").innerText = contador;
+        
+        function oprimirBtn(event){
+
+            const btn=event.target
+            const respuesta=btn.innerText
+
             let respuestaCorrectaError= null
             for (let i=0;i<preguntas.length;i++){
                 if(respuestac==preguntas[i].innerText){
@@ -43,31 +51,29 @@
                     break
                 }
             }
-            console.log(respuestaCorrectaError);
-            
+    
             
             if(respuestac===respuesta){
+                contador++
                 btn.style.background = "green"
-                setTimeout(() => {
-                    location.reload()
-                }, 2000);
-                
-
             } else {
+                contador = 0
                 respuestaCorrectaError.style.background="green"
                 btn.style.background = "red"
-                setTimeout(() => {
-                    location.reload()
-                }, 2000);
-                
-
-                
             }
+
+            document.getElementById("contador").innerText = contador;
+            sessionStorage.setItem("contador", contador);
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+            
+
         }
-        document.querySelector(".btn1").addEventListener("click", oprimirBtn);
-        document.querySelector(".btn2").addEventListener("click", oprimirBtn);
-        document.querySelector(".btn3").addEventListener("click", oprimirBtn);
-        document.querySelector(".btn4").addEventListener("click", oprimirBtn);
+        document.querySelectorAll(".btn1, .btn2, .btn3 ,.btn4").forEach(btn=>{
+            btn.addEventListener("click", oprimirBtn);
+        })  
+
         const btn1=document.querySelector(".btn1")
         const btn2=document.querySelector(".btn2")
         const btn3=document.querySelector(".btn3")
